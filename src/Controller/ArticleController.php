@@ -2,36 +2,44 @@
 namespace App\Controller;
 
 use App\Service\MarkdownHelper;
-use Nexy\Slack\Client;
+use App\Service\SlackClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
     /**
-     * @Route("/", name="app_homepage")
+     * @Route(
+     *     "/",
+     *     name="app_homepage"
+     * )
      */
-    public function homepage()
+    public function homepage(): Response
     {
         return $this->render('article/homepage.html.twig');
     }
 
     /**
-     * @Route("/news/{slug}", name="article_show")
+     * @Route(
+     *     "/news/{slug}",
+     *     name="article_show"
+     * )
+     * @param $slug
+     * @param MarkdownHelper $markdownHelper
+     * @param SlackClient $slack
+     * @return Response
      */
-    public function show($slug, MarkdownHelper $markdownHelper, Client $slack)
+    public function show(
+        $slug,
+        MarkdownHelper $markdownHelper,
+        SlackClient $slack
+    ): Response
     {
         if ($slug === 'Khaaaan') {
-            $message = $slack->createMessage();
-
-            $message
-                ->from('Khan')
-                ->withIcon(':ghost:')
-                ->setText('Ah Kirk, my old friend!');
-
-            $slack->sendMessage($message);
+            $slack->sendMessage('Khan', 'Ah Kirk, my old friend!');
         }
 
         $comments = [
@@ -81,12 +89,19 @@ EOF;
     }
 
     /**
-     * @Route("/news/{slug}/heart", name="article_toggle_heart", methods={"POST"})
+     * @Route(
+     *     "/news/{slug}/heart",
+     *     name="article_toggle_heart",
+     *     methods={"POST"}
+     * )
+     * @param $slug
+     * @param LoggerInterface $logger
+     * @return JsonResponse
      */
-    public function toggleArticleHeart($slug, LoggerInterface $logger)
+    public function toggleArticleHeart($slug, LoggerInterface $logger): JsonResponse
     {
         // TODO - do it
-        $logger->info('Article is being hearted');
+        $logger->info("Article $slug is being hearted");
         return new JsonResponse([ 'hearts' => rand(5, 100) ]);
     }
 }
