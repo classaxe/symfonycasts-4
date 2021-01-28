@@ -3,9 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use App\Service\MarkdownHelper;
 use App\Service\SlackClient;
-use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -34,27 +32,15 @@ class ArticleController extends AbstractController
      *     "/news/{slug}",
      *     name="article_show"
      * )
-     * @param $slug
-     * @param MarkdownHelper $markdownHelper
+     * @param Article $article
      * @param SlackClient $slack
      * @return Response
      */
-    public function show(
-        $slug,
-        SlackClient $slack,
-        EntityManagerInterface $em
-    ): Response
+    public function show(Article $article, SlackClient $slack): Response
     {
-        if ($slug === 'Khaaaan') {
+        // This trick works by having Symfony query the Article entities for the same field as the parameter
+        if ($article->getSlug() === 'Khaaaan') {
             $slack->sendMessage('Khan', 'Ah Kirk, my old friend!');
-        }
-
-        $repository = $em->getRepository(Article::class);
-
-        /** @var Article $article */
-        $article = $repository->findOneBy(['slug' => $slug]);
-        if (!$article) {
-            throw $this->createNotFoundException(sprintf('No article matched slug "%s"', $slug));
         }
 
         $comments = [
