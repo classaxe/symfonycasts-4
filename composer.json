@@ -74,6 +74,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "fzaninotto/faker": "^1.9",
         "sensiolabs/security-checker": "^6.0",
         "symfony/debug-bundle": "^4.4",
         "symfony/maker-bundle": "^1.28",
