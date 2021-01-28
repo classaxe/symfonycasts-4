@@ -55,6 +55,20 @@ EOF
         if (rand(1,10) > 2) {
             $article->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1,100))));
         }
+        $images = [
+            'alien-profile.png',
+            'asteroid.jpeg',
+            'astronaut-profile.png',
+            'lightspeed.png',
+            'mercury.jpeg',
+            'meteor-shower.jpg',
+            'space-ice.png',
+            'space-nav.jpg'
+        ];
+        $article->setAuthor('Mike Ferengi')
+            ->setHeartCount(rand(0, 100))
+            ->setImageFilename($images[rand(0, count($images) -1)]);
+
         $em->persist($article);
         $em->flush();
 
