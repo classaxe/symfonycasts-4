@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Comment;
 use App\Entity\Article;
 use Doctrine\Persistence\ObjectManager;
 
@@ -71,19 +70,19 @@ EOF
                 ->setHeartCount($this->faker->numberBetween(5, 100))
                 ->setImageFilename($this->faker->randomElement(self::$articleImages));
 
-            $comment1 = new Comment();
-            $comment1
-                ->setAuthorName('Mike Ferengi')
-                ->setContent('I ate a normal rock once. It did NOT taste like bacon!')
-                ->setArticle($article);
-            $manager->persist($comment1);
-
-            $comment2 = new Comment();
-            $comment2
-                ->setAuthorName('Mike Ferengi')
-                ->setContent('Woohoo! I\'m going on an all-asteroid diet!')
-                ->setArticle($article);
-            $manager->persist($comment2);
+//            $comment1 = new Comment();
+//            $comment1
+//                ->setAuthorName('Mike Ferengi')
+//                ->setContent('I ate a normal rock once. It did NOT taste like bacon!')
+//                ->setArticle($article);
+//            $manager->persist($comment1);
+//
+//            $comment2 = new Comment();
+//            $comment2
+//                ->setAuthorName('Mike Ferengi')
+//                ->setContent('Woohoo! I\'m going on an all-asteroid diet!')
+//                ->setArticle($article);
+//            $manager->persist($comment2);
         });
         $manager->flush();
     }
