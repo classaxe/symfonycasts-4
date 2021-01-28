@@ -146,4 +146,11 @@ class Article
     {
         return 'images/' . $this->imageFilename;
     }
+
+    public function incrementHeartCount(): self
+    {
+        $this->heartCount += 1;
+
+        return $this;
+    }
 }

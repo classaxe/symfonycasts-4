@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Service\SlackClient;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -61,14 +62,21 @@ class ArticleController extends AbstractController
      *     name="article_toggle_heart",
      *     methods={"POST"}
      * )
-     * @param $slug
+     * @param Article $article
      * @param LoggerInterface $logger
+     * @param EntityManagerInterface $em
      * @return JsonResponse
      */
-    public function toggleArticleHeart($slug, LoggerInterface $logger): JsonResponse
+    public function toggleArticleHeart(
+        Article $article,
+        LoggerInterface $logger,
+        EntityManagerInterface $em
+    ): JsonResponse
     {
-        // TODO - do it
-        $logger->info("Article $slug is being hearted");
-        return new JsonResponse([ 'hearts' => rand(5, 100) ]);
+        $article->incrementHeartCount();
+        $em->flush($article);
+
+        $logger->info("Article {$article->getSlug()} is being hearted");
+        return new JsonResponse([ 'hearts' => $article->getHeartCount()]);
     }
 }
