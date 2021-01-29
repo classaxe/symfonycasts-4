@@ -189,9 +189,7 @@ class Article
     {
         // This is way more efficient than loading and looping and still allows lazy loading
         // But this query logic belongs in the repo, not the entity
-        $criteria = Criteria::create()
-            ->andWhere(Criteria::expr()->eq('isDeleted', false))
-            ->orderBy(['createdAt' => 'DESC']);
+        $criteria = ArticleRepository::createNonDeletedCriteria();
 
         return $this->comments->matching($criteria);
     }
