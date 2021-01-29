@@ -11,6 +11,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "knplabs/knp-markdown-bundle": "^1.8",
+        "knplabs/knp-paginator-bundle": "^5.4",
         "knplabs/knp-time-bundle": "^1.15",
         "nexylan/slack-bundle": "2.2.0",
         "php-http/guzzle6-adapter": "1.1.1",
