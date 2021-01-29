@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -186,7 +187,13 @@ class Article
      */
     public function getNonDeletedComments(): Collection
     {
-        return $this->comments;
+        // This is way more efficient than loading and looping and still allows lazy loading
+        // But this query logic belongs in the repo, not the entity
+        $criteria = Criteria::create()
+            ->andWhere(Criteria::expr()->eq('isDeleted', false))
+            ->orderBy(['createdAt' => 'DESC']);
+
+        return $this->comments->matching($criteria);
     }
 
     public function addComment(Comment $comment): self
