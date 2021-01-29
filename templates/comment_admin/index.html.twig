@@ -11,10 +11,13 @@
 
             <form>
                 <div class="input-group mb-3">
+                    <label class="sr-only" for="q">Query</label>
                     <input type="text"
+                           id="q"
                            name="q"
                            class="form-control"
                            placeholder="Search..."
+                           value="{{ app.request.query.get('q') }}"
                     >
                     <div class="input-group-append">
                         <button type="submit"
@@ -45,6 +48,12 @@
                         <td>{{ comment.authorName }}</td>
                         <td style="width: 20%">{{ comment.content|u.truncate(30, '...') }}</td>
                         <td>{{ comment.createdAt|ago }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            No comments found
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
