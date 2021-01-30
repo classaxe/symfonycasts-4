@@ -23,6 +23,13 @@
                         <img class="article-img" alt="asteroid" src="{{ asset(article.imagePath) }}">
                         <div class="article-title d-inline-block pl-3 align-middle">
                             <span>{{ article.title }}</span>
+                            <br>
+                            {% for tag in article.tags %}
+                                <small>
+                                    <span class="badge badge-light">{{ tag.name }}</span>
+                                </small>
+                            {% endfor %}
+                            <br>
                             <small>{{ article.nonDeletedComments|length }} Comments</small>
                             <br>
                             <span class="align-left article-details"><img class="article-author-img rounded-circle" alt="Avatar for Alien" src="{{ asset('images/alien-profile.png') }}"> {{ article.author }} </span>
