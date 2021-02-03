@@ -24,4 +24,14 @@ class SecurityController extends AbstractController
             'error' => $error
         ]);
     }
+
+    /**
+     * @Route("/logout", name="app_logout")
+     */
+    public function logout(AuthenticationUtils $authenticationUtils): Response
+    {
+        throw new \Exception('will be intercepted before getting here!');
+    }
+
+
 }
