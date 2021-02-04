@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Controller;
-
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,18 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
+ * Class AccountController
+ * @package App\Controller
  */
-class ArticleAdminController extends AbstractController
+class AccountController extends AbstractController
 {
     /**
-     * @Route(
-     *     "/admin/article/new",
-     *     name="admin_article_new"
-     * )
+     * @Route("/account", name="app_account")
      */
-    public function new()
+    public function index(): Response
     {
-        return new Response('To Do');
+        return $this->render('account/index.html.twig', [
+        ]);
     }
 }
