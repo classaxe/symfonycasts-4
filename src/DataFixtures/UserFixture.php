@@ -27,7 +27,9 @@ class UserFixture extends BaseFixture
                 ->setFirstName($this->faker->firstName)
                 ->setPassword($this->passwordEncoder->encodePassword(
                     $user, 'engage'
-                ));
+                ))
+                ->setTwitterUsername($this->faker->boolean ? $this->faker->userName : null)
+            ;
 
             return $user;
         });
@@ -40,7 +42,8 @@ class UserFixture extends BaseFixture
                 ->setPassword($this->passwordEncoder->encodePassword(
                     $user, 'engage'
                 ))
-                ->setRoles(['ROLE_ADMIN']);
+                ->setRoles(['ROLE_ADMIN'])
+            ;
 
             return $user;
         });
