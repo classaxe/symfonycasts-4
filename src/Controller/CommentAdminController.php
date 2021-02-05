@@ -14,7 +14,7 @@ class CommentAdminController extends AbstractController
 {
     /**
      * @Route("/admin/comment", name="comment_admin")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN_COMMENT")
      */
     public function index(
         CommentRepository $repository,
