@@ -2,9 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Security\LoginFormAuthenticator;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -28,9 +34,46 @@ class SecurityController extends AbstractController
     /**
      * @Route("/logout", name="app_logout")
      */
-    public function logout(AuthenticationUtils $authenticationUtils): Response
+    public function logout()
     {
-        throw new \Exception('will be intercepted before getting here!');
+        throw new Exception('will be intercepted before getting here!');
+    }
+
+    /**
+     * @Route("/register", name="app_register")
+     *
+     * This code only belongs in here because we will automatically log in afterwards
+     */
+    public function register(
+        Request $request,
+        UserPasswordEncoderInterface $passwordEncoder,
+        GuardAuthenticatorHandler $guardHandler,
+        LoginFormAuthenticator $formAuthenticator
+    ) {
+        // TODO: Use Symfony forms & validation
+
+        if ($request->isMethod('POST')) {
+            $user = new User();
+            $password = $passwordEncoder->encodePassword(
+                $user,
+                $request->request->get('password')
+            );
+            $user
+                ->setEmail($request->request->get('email'))
+                ->setFirstName('Mystery')
+                ->setPassword($password);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $formAuthenticator,
+                'main'
+            );
+        }
+        return $this->render('security/register.html.twig');
     }
 
 
