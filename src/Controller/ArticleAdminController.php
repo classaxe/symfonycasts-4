@@ -25,19 +25,11 @@ class ArticleAdminController extends AbstractController
     }
 
     /**
-     * @Route(
-     *     "/admin/article/{id}/edit",
-     *     name="admin_article_news"
-     * )
+     * @Route("/admin/article/{id}/edit")
+     * @IsGranted("MANAGE", subject="article")
      */
     public function edit(Article $article)
     {
-        if ($article->getAuthor() !== $this->getUser() &&
-            !$this->isGranted('ROLE_ADMIN_ARTICLE')
-        ) {
-            throw $this->createAccessDeniedException('No Access!');
-        }
-
         dd($article);
     }
 }
