@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Article;
+use App\Form\ArticleFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,10 @@ class ArticleAdminController extends AbstractController
      */
     public function new()
     {
-        return new Response('To Do');
+        $form = $this->createForm(ArticleFormType::class);
+        return $this->render('article_admin/new.html.twig', [
+            'articleForm' => $form->createView(),
+        ]);
     }
 
     /**
