@@ -32,7 +32,7 @@
                             <br>
                             <small>{{ article.nonDeletedComments|length }} Comments</small>
                             <br>
-                            <span class="align-left article-details"><img class="article-author-img rounded-circle" alt="Avatar for Alien" src="{{ asset('images/alien-profile.png') }}"> {{ article.author.email }} </span>
+                            <span class="align-left article-details"><img class="article-author-img rounded-circle" alt="Avatar for Alien" src="{{ asset('images/alien-profile.png') }}"> {{ article.author }} </span>
                             <span class="pl-5 article-details float-right">{{ article.publishedAt ? article.publishedAt|ago }}</span>
                         </div>
                     </a>
