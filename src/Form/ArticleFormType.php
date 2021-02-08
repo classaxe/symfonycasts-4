@@ -6,6 +6,7 @@ namespace App\Form;
 
 use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,7 +20,11 @@ class ArticleFormType extends AbstractType
             ->add('title', TextType::class, [
                 'help' => 'Choose something catchy!'
             ])
-            ->add('content', TextareaType::class);
+            ->add('content', TextareaType::class)
+            ->add('publishedAt', DateTimeType::class, [
+                'widget' =>'single_text'
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
