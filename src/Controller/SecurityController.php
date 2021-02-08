@@ -58,7 +58,7 @@ class SecurityController extends AbstractController
             $user = $form->getData();
             $passwordEnc = $passwordEncoder->encodePassword(
                 $user,
-                $user->getPassword()
+                $form['plainPassword']->getData()
             );
 
             $user
