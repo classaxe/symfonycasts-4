@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ArticleRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -130,6 +131,11 @@ class Article
         $this->publishedAt = $publishedAt;
 
         return $this;
+    }
+
+    public function isPublished(): bool
+    {
+        return $this->publishedAt !== null && $this->publishedAt <= new DateTime();
     }
 
     public function getHeartCount(): ?int
