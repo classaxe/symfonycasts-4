@@ -61,6 +61,9 @@ class SecurityController extends AbstractController
                 $form['plainPassword']->getData()
             );
 
+            if (true === $form['agreeTerms']->getData()) {
+                $user->agreeTerms();
+            }
             $user
                 ->setPassword($passwordEnc)
                 ->setFirstName('Mystery');
