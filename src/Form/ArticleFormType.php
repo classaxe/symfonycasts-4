@@ -33,7 +33,8 @@ class ArticleFormType extends AbstractType
             ])
             ->add('content', TextareaType::class)
             ->add('publishedAt', DateTimeType::class, [
-                'widget' =>'single_text'
+                'widget' =>'single_text',
+                'required' => false
             ])
             ->add('author', UserSelectTextType::class)
         ;
