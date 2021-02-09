@@ -74,6 +74,7 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull(message="Please set an author")
      */
     private $author;
 
