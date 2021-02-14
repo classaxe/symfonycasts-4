@@ -51,7 +51,9 @@ class ArticleAdminController extends AbstractController
      */
     public function edit(Article $article, EntityManagerInterface $em, Request $request)
     {
-        $form = $this->createForm(ArticleFormType::class, $article);
+        $form = $this->createForm(ArticleFormType::class, $article, [
+            'include_published_at' => true
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Article $article */
