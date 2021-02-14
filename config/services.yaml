@@ -35,3 +35,9 @@ services:
 #    App\Service\MarkdownHelper:
 #        arguments:
 #            $logger: '@monolog.logger.markdown'
+
+# Not needed for Symfony 4.2 and later
+#    App\Form\TypeExtension\TextareaSizeExtension:
+#        tags:
+#            - { name: form.type_extension,
+#                extended_type: Symfony\Component\Form\Extension\Core\Type\TextareaType }
