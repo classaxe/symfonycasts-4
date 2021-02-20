@@ -40,7 +40,7 @@ class ArticleController extends AbstractController
     public function show(Article $article, SlackClient $slack): Response
     {
         // This trick works by having Symfony query the Article entities for the same field as the parameter
-        if ($article->getSlug() === 'Khaaaan') {
+        if ($article->getSlug() === 'why-asteroids-taste-like-bacon') {
             $slack->sendMessage('Khan', 'Ah Kirk, my old friend!');
         }
 
