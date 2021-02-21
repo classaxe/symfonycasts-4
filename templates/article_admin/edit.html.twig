@@ -1,6 +1,13 @@
 {% extends 'content_base.html.twig' %}
 
+{% block javascripts%}
+    {{ parent() }}
+    <script src="{{ asset('js/admin_article_form.js') }}"></script>
+{% endblock %}
+
 {% block content_body %}
     <h1>Edit an Article! 🚀</h1>
-    {{ include('article_admin/_form.html.twig', { button_text: 'Update!' }) }}
+    {{ include('article_admin/_form.html.twig', {
+        button_text: 'Update!'
+    }) }}
 {% endblock %}

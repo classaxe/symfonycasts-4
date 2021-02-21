@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleAdminController extends AbstractController
@@ -73,6 +74,28 @@ class ArticleAdminController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route(
+     *     "/admin/article/location-select",
+     *     name="admin_article_location_select"
+     * )
+     */
+    public function getSpecificLocationSelect(Request $request)
+    {
+        // We will create this dummy article in memory just to output a fragment of a form that references it.
+        $article = new Article();
+        $article->setLocation($request->query->get('location'));
+        $form = $this->createForm(ArticleFormType::class, $article);
+
+        // no field?  Return an empty response
+        if (!$form->has('specificLocationName')) {
+            return new Response(null, Response::HTTP_NO_CONTENT);
+        }
+
+        return $this->render('article_admin/_specific_location_name.html.twig', [
+            'articleForm' => $form->createView()
+        ]);
+    }
     /**
      * @Route(
      *     "/admin/article/",
