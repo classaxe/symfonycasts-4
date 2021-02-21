@@ -65,9 +65,11 @@ class User implements UserInterface
     private $apiTokens;
 
     /**
-     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Article::class, mappedBy="author", fetch="EXTRA_LAZY")
      */
     private $articles;
+    // fetch="EXTRA_LAZY" above allows us to call $user->getArticles()->isEmpty() without hydrating 200 articles -
+    // Doctrine will use a simple count(*) and fetch the number of matches without retrieving them unnecessarily
 
     /**
      * @ORM\Column(type="datetime")

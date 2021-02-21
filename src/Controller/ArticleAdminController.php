@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleAdminController extends AbstractController
+class ArticleAdminController extends BaseController
 {
     /**
      * @Route(
@@ -79,9 +79,13 @@ class ArticleAdminController extends AbstractController
      *     "/admin/article/location-select",
      *     name="admin_article_location_select"
      * )
+     * @IsGranted("ROLE_USER")
      */
     public function getSpecificLocationSelect(Request $request)
     {
+        if (!$this->isGranted('ROLE_ADMIN_ARTICLE') && $this->getUser()->getArticles()->isEmpty()) {
+            throw $this->createAccessDeniedException();
+        }
         // We will create this dummy article in memory just to output a fragment of a form that references it.
         $article = new Article();
         $article->setLocation($request->query->get('location'));
