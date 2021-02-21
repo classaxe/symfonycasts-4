@@ -272,7 +272,7 @@ class Article
     public function validate(ExecutionContextInterface $context, $payload)
     {
         if (stripos($this->getTitle(), 'the borg') !== false) {
-            $context->buildViolation('Um.. the Bork kinda makes us nervous')
+            $context->buildViolation('Um.. the Borg kinda makes us nervous')
                 ->atPath('title')
                 ->addViolation();
         }
@@ -286,6 +286,10 @@ class Article
     public function setLocation(?string $location): self
     {
         $this->location = $location;
+
+        if (!$location || $location === 'interstellar_space') {
+            $this->setSpecificLocationName(null);
+        }
 
         return $this;
     }
